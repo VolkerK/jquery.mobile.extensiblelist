@@ -24,6 +24,8 @@ You can then easily add the data-role "extensiblelist" to any ul Element and mak
 </ul>
 ~~~
 
+Take a look at the examples or try out this [jsfiddle](http://jsfiddle.net/TJ3NH/3/)
+
 Upcoming Features
 -----------------
 Add an ajxa url so that chunks can be loaded dynamically. At the moment the whole list is loaded and parts of it are hidden.
