@@ -1,3 +1,12 @@
+/*
+ * jquery.mobile.extensiblelist v1
+ *
+ * Copyright (c) 2012, Volker Krebs
+ * Dual licensed under the MIT and GPL Version 2 licenses.
+ * 
+ * Date: 2012-07-20
+ * Revision: 1
+ */
 (function($){
 	$.widget("mobile.extensiblelist", $.mobile.widget, {
 		options: {
@@ -6,25 +15,25 @@
 		},
 		_create: function() {
 			var listitems = this.element.children('li');
+			var self = this;
 			listitems.each(function(index, li) {
-				if(index >= 3) {
+				if(index >= self.options.extlstSize) {
 					$(li).hide();
 				}
 			});
-			//TODO: Check if listview is ok, are we really an ul element ?
 			this.element.append('<li class="ui-extensiblelist-morebtn"><a href="#" class="extensiblelist-morebtn">' + this.options.extlstPlaceholder + '</a></li>');
 			this.element.listview();
-			$(".extensiblelist-morebtn").bind("click", this.element, this._more)
+			this.element.find(".extensiblelist-morebtn").bind("click", { list : this.element , size : this.options.extlstSize } , this._more)
 		},
 		_more: function(event) {
-			var morebtn = event.data.children(".ui-extensiblelist-morebtn");
-			var hiddenListitems = event.data.children('li:hidden');
+			var morebtn = event.data.list.children(".ui-extensiblelist-morebtn");
+			var hiddenListitems = event.data.list.children('li:hidden');
 			hiddenListitems.each(function(index, li) {
-				if(index < 3) {
+				if(index < event.data.size) {
 					$(li).show();
 				}
 			});
-			if (hiddenListitems.length <= 3) {
+			if (hiddenListitems.length <= event.data.size) {
 				morebtn.remove();
 			}
 		}
