@@ -15,15 +15,23 @@
 		},
 		_create: function() {
 			var listitems = this.element.children('li');
+			if (isNaN(this.options.extlstSize)) {
+				//default to 5 if input was wrong
+				this.options.extlstSize = 5;
+			}
 			var self = this;
+			var appendMoreButton = false;
 			listitems.each(function(index, li) {
 				if(index >= self.options.extlstSize) {
 					$(li).hide();
+					appendMoreButton = true;
 				}
 			});
-			this.element.append('<li class="ui-extensiblelist-morebtn"><a href="#" class="extensiblelist-morebtn">' + this.options.extlstPlaceholder + '</a></li>');
+			if (appendMoreButton) {
+				this.element.append('<li class="ui-extensiblelist-morebtn"><a href="#" class="extensiblelist-morebtn">' + this.options.extlstPlaceholder + '</a></li>');
+				this.element.find(".extensiblelist-morebtn").bind("click", { list : this.element , size : this.options.extlstSize } , this._more)
+			}
 			this.element.listview();
-			this.element.find(".extensiblelist-morebtn").bind("click", { list : this.element , size : this.options.extlstSize } , this._more)
 		},
 		_more: function(event) {
 			var morebtn = event.data.list.children(".ui-extensiblelist-morebtn");
