@@ -9,7 +9,7 @@ How to use
 ----------
 Put *jquery.mobile.extensiblelist.js* and *jquery.mobile.extensiblelist.css* into your jQuery Mobile application like
 you would do with any other plugin.
-You can then easily add the data-role "extensiblelist" to any ul Element and make it a extensible list.
+You can then easily add the data-role "extensiblelist" to any ul Element and make it an extensible list.
 
 ~~~
 <ul data-role="extensiblelist">
@@ -25,6 +25,16 @@ You can then easily add the data-role "extensiblelist" to any ul Element and mak
 ~~~
 
 Take a look at the examples or try out this [jsfiddle](http://jsfiddle.net/TJ3NH/3/)
+
+Data-attribute reference
+------------------------
+* **data-extlst-placeholder** - string
+
+  Text that will be written on the button at the end of the list.
+  
+* **data-extlst-size** - number
+
+  Size of the chuncks.
 
 Upcoming Features
 -----------------
