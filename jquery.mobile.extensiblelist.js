@@ -11,7 +11,7 @@
 	$.widget("mobile.extensiblelist", $.mobile.widget, {
 		options: {
 			extlstPlaceholder: 'more',
-			extlstSize: 5,
+			extlstSize: 5
 		},
 		_create: function() {
 			var listitems = this.element.children('li');
