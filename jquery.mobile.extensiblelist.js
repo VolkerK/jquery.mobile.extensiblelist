@@ -32,6 +32,9 @@
 				this.element.find(".extensiblelist-morebtn").bind("click", { list : this.element , size : this.options.extlstSize } , this._more)
 			}
 			this.element.listview();
+			//workaround for jqm-1.0: remove the class ui-link
+			//the class ui-link screws up the link colors. It is removed from listview elements since jqm 1.1 anyway!
+			this.element.find("a").removeClass("ui-link");
 		},
 		_more: function(event) {
 			var morebtn = event.data.list.children(".ui-extensiblelist-morebtn");
