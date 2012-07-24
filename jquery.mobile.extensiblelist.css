@@ -1,3 +1,7 @@
 .ui-extensiblelist-morebtn a {
 	text-align: center;
 }
+.ui-extensiblelist-morebtn {
+    background: -moz-linear-gradient(center top , #EAEAEC 0px, #C8C9CA 65%, #E9E9EA 100%) repeat scroll 0 0 transparent;
+    color: #5B5B5B;
+}
