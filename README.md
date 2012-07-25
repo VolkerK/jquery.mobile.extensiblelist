@@ -39,3 +39,8 @@ Data-attribute reference
 Upcoming Features
 -----------------
 Add an ajxa url so that chunks can be loaded dynamically. At the moment the whole list is loaded and parts of it are hidden.
+
+Hint
+----
+If your looking for a more feature rich (but complex) solution, including templates and other handy stuff take look at 
+[LazyLoader Widget for jQuery Mobile](https://github.com/dcarrith/jquery.mobile.lazyloader) 
