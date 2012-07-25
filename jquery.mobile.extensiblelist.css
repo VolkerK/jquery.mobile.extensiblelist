@@ -2,6 +2,13 @@
 	text-align: center;
 }
 .ui-extensiblelist-morebtn {
-    background: -moz-linear-gradient(center top , #EAEAEC 0px, #C8C9CA 65%, #E9E9EA 100%) repeat scroll 0 0 transparent;
+    background: #eaeaec;
+	background: -moz-linear-gradient(top,  #eaeaec 0px, #c8c9ca 65%, #e9e9ea 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0px,#eaeaec), color-stop(65%,#c8c9ca), color-stop(100%,#e9e9ea));
+	background: -webkit-linear-gradient(top,  #eaeaec 0px,#c8c9ca 65%,#e9e9ea 100%);
+	background: -o-linear-gradient(top,  #eaeaec 0px,#c8c9ca 65%,#e9e9ea 100%);
+	background: -ms-linear-gradient(top,  #eaeaec 0px,#c8c9ca 65%,#e9e9ea 100%);
+	background: linear-gradient(to bottom,  #eaeaec 0px,#c8c9ca 65%,#e9e9ea 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eaeaec', endColorstr='#e9e9ea',GradientType=0 );
     color: #5B5B5B;
 }

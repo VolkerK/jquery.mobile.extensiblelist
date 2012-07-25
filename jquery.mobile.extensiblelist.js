@@ -7,19 +7,19 @@
  * Date: 2012-07-20
  * Revision: 1
  */
-(function($){
+(function($) {
 	$.widget("mobile.extensiblelist", $.mobile.widget, {
 		options: {
 			extlstPlaceholder: 'more',
 			extlstSize: 5
 		},
 		_create: function() {
-			var listitems = this.element.children('li');
 			if (isNaN(this.options.extlstSize)) {
 				//default to 5 if input was wrong
 				this.options.extlstSize = 5;
 			}
 			var self = this
+			  , listitems = this.element.children('li')
 			  , appendMoreButton = false
 			  , hiddenEntriesCount = listitems.length - this.options.extlstSize;
 			listitems.each(function(index, li) {
@@ -29,12 +29,15 @@
 				}
 			});
 			if (appendMoreButton) {
-				var countBubble = $('<span class="ui-li-count">').html(hiddenEntriesCount)
-				  , btninner = $('<a href="#" class="extensiblelist-morebtn">')
-					.bind("click", {list: this.element, size: this.options.extlstSize} , this._more)
-				  	.html(this.options.extlstPlaceholder)
-				  	.append(countBubble)
-				var morebtn = $('<li data-icon="false" class="ui-extensiblelist-morebtn">').append(btninner);
+				var btninner = $([
+					'<a href="#" class="extensiblelist-morebtn">',
+						this.options.extlstPlaceholder,
+						'<span class="ui-li-count">', hiddenEntriesCount, '</span>',
+					'</a>'].join(''));
+				btninner.bind("click", {list: this.element, size: this.options.extlstSize} , this._more);
+				var morebtn = $('<li data-icon="false">')
+					.addClass('ui-extensiblelist-morebtn')
+					.append(btninner);
 				this.element.append(morebtn);
 			}
 			this.element.listview();
