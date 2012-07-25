@@ -11,7 +11,7 @@ Put *jquery.mobile.extensiblelist.js* and *jquery.mobile.extensiblelist.css* int
 you would do with any other plugin.
 You can then easily add the data-role "extensiblelist" to any ul Element and make it an extensible list.
 
-~~~
+```html
 <ul data-role="extensiblelist">
   <li>Item 1</li>
   <li>Item 2</li>
@@ -22,7 +22,7 @@ You can then easily add the data-role "extensiblelist" to any ul Element and mak
   <li>Item 7</li>
   <li>Item 8</li>
 </ul>
-~~~
+```
 
 Take a look at the examples or try out this [jsfiddle](http://jsfiddle.net/TJ3NH/3/)
 
