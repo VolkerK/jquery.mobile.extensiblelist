@@ -24,8 +24,10 @@
 			  , appendMoreButton = false
 			  , hiddenEntriesCount = listitems.length - this.options.extlstSize;
 			listitems.each(function(index, li) {
+				// hide listitems when extlstSize is reached
 				if(index >= self.options.extlstSize) {
 					$(li).hide();
+					// when we have hidden something, we need a more button
 					appendMoreButton = true;
 				}
 			});
@@ -43,15 +45,14 @@
 					.append(btninner);
 				this.element.append(morebtn);
 			}
+			//apply listview plugin
 			this.element.listview();
 
-			if ( this.options.extlstGrabspace ) {
+			// only grab space if we are instructed and have some li's
+			if ( this.options.extlstGrabspace && this.element.find('li').length > 0 ) {
 				var list = this.element
 				  , page = list.parents(':jqmData(role=page)');
 				page.bind('pageshow', $.proxy(function() {
-					if (this.element.find('li').length === 0) {
-						return;
-					}
 					var availableSpace = this._calculateAvailableSpace();
 					if( availableSpace > 0 ) {
 						 this._displayMoreItems(list, availableSpace);
@@ -63,31 +64,35 @@
 			var morebtn = list.children(".ui-extensiblelist-morebtn")
 			  , hiddenListitems = list.children('li:hidden')
 			  , countBubble = morebtn.find('span.ui-li-count');
+			// show 'size' hidden items
 			hiddenListitems.each(function(index, li) {
 				if(index < size) {
 					$(li).show();
 				}
 			});
+			// when no more items are hidden, remove the more button
 			if (hiddenListitems.length <= size) {
 				morebtn.remove();
 			} else {
+				// replace the text in the count bubble
 				countBubble.html(hiddenListitems.length - size);
 				var scrollObject = $.browser.mozilla ? 'html' : 'body'; 
 				$(scrollObject).animate({scrollTop: morebtn.position().top +'px'}, 800);
 			}
 		},
+		// returns the number of listitems that still fit onto page.
+		// the heigth of the first non list-divider listitems represents the high of all other listitems
 		_calculateAvailableSpace: function() {
 			var list = this.element
 			  , page = list.parents(':jqmData(role=page)')
 			  , headerHeight = page.find(':jqmData(role=header)').height() || 0
-			  , footerHeight = page.find(':jqmData(role=header)').height() || 0
+			  , footerHeight = page.find(':jqmData(role=footer)').height() || 0
 			  , windowHeight = $(window).height()
 			  , listHeight = list.height()
 			  , approxListitemHeight = list.find('li').not(':jqmData(role=list-divider)').first().height() || 9999
-			  , availableSpace = windowHeight - headerHeight - footerHeight - listHeight
-			  , morebtnHeight = (list.find('.ui-extensiblelist-morebtn').height() || 0);
-			  
-			return Math.floor((availableSpace - morebtnHeight) / approxListitemHeight);
+			  , morebtnHeight = (list.find('.ui-extensiblelist-morebtn').height() || 0)
+			  , availableSpace = windowHeight - headerHeight - footerHeight - listHeight - morebtnHeight;
+			return Math.floor(availableSpace / approxListitemHeight);
 		}
 	});
 
