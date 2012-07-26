@@ -8,15 +8,16 @@
  * Revision: 1
  */
 (function($) {
-	$.widget("mobile.extensiblelist", $.mobile.widget, {
+	$.widget('mobile.extensiblelist', $.mobile.widget, {
 		options: {
+			initSelector	: ':jqmData(role=extensiblelist)',
 			extlstPlaceholder: 'more',
-			extlstSize: 5
+			extlstSize: 5,
+			extlstGrabspace: false
 		},
 		_create: function() {
 			if (isNaN(this.options.extlstSize)) {
-				//default to 5 if input was wrong
-				this.options.extlstSize = 5;
+				this.options.extlstSize = 5; // Default to 5 if input was invalid
 			}
 			var self = this
 			  , listitems = this.element.children('li')
@@ -34,31 +35,64 @@
 						this.options.extlstPlaceholder,
 						'<span class="ui-li-count">', hiddenEntriesCount, '</span>',
 					'</a>'].join(''));
-				btninner.bind("click", {list: this.element, size: this.options.extlstSize} , this._more);
+				btninner.bind("click", $.proxy(function(event) {
+					this._displayMoreItems(this.element, this.options.extlstSize);
+				}, this));
 				var morebtn = $('<li data-icon="false">')
 					.addClass('ui-extensiblelist-morebtn')
 					.append(btninner);
 				this.element.append(morebtn);
 			}
 			this.element.listview();
+
+			if ( this.options.extlstGrabspace ) {
+				var list = this.element
+				  , page = list.parents(':jqmData(role=page)');
+				page.bind('pageshow', $.proxy(function() {
+					if (this.element.find('li').length === 0) {
+						return;
+					}
+					var availableSpace = this._calculateAvailableSpace();
+					if( availableSpace > 0 ) {
+						 this._displayMoreItems(list, availableSpace);
+					 }
+				}, this));
+			}
 		},
-		_more: function(event) {
-			var morebtn = event.data.list.children(".ui-extensiblelist-morebtn")
-			  , hiddenListitems = event.data.list.children('li:hidden')
+		_displayMoreItems: function(list, size) {
+			var morebtn = list.children(".ui-extensiblelist-morebtn")
+			  , hiddenListitems = list.children('li:hidden')
 			  , countBubble = morebtn.find('span.ui-li-count');
 			hiddenListitems.each(function(index, li) {
-				if(index < event.data.size) {
+				if(index < size) {
 					$(li).show();
 				}
 			});
-			if (hiddenListitems.length <= event.data.size) {
+			if (hiddenListitems.length <= size) {
 				morebtn.remove();
+			} else {
+				countBubble.html(hiddenListitems.length - size);
+				var scrollObject = $.browser.mozilla ? 'html' : 'body'; 
+				$(scrollObject).animate({scrollTop: morebtn.position().top +'px'}, 800);
 			}
-			countBubble.html(hiddenListitems.length - event.data.size);
+		},
+		_calculateAvailableSpace: function() {
+			var list = this.element
+			  , page = list.parents(':jqmData(role=page)')
+			  , headerHeight = page.find(':jqmData(role=header)').height() || 0
+			  , footerHeight = page.find(':jqmData(role=header)').height() || 0
+			  , windowHeight = $(window).height()
+			  , listHeight = list.height()
+			  , approxListitemHeight = list.find('li').not(':jqmData(role=list-divider)').first().height() || 9999
+			  , availableSpace = windowHeight - headerHeight - footerHeight - listHeight
+			  , morebtnHeight = (list.find('.ui-extensiblelist-morebtn').height() || 0);
+			  
+			return Math.floor((availableSpace - morebtnHeight) / approxListitemHeight);
 		}
 	});
 
-	$(document).bind("pagecreate", function(event) {
-		$(event.target).find(":jqmData(role='extensiblelist')").extensiblelist();
+	//auto self-init widgets
+	$(document).bind('pagecreate', function(event) {
+		$($.mobile.extensiblelist.prototype.options.initSelector, event.target).extensiblelist();
 	});
 }(jQuery));

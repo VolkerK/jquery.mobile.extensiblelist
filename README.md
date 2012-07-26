@@ -36,6 +36,10 @@ Data-attribute reference
 
   Size of the chuncks.
 
+* **data-extlst-grabspace** - boolean, Default = false
+
+  Initially show as much items as possible
+  
 Upcoming Features
 -----------------
 Add an ajxa url so that chunks can be loaded dynamically. At the moment the whole list is loaded and parts of it are hidden.
