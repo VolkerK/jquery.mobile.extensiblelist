@@ -28,14 +28,18 @@ Take a look at the examples or try out this [jsfiddle](http://jsfiddle.net/TJ3NH
 
 Data-attribute reference
 ------------------------
-* **data-extlst-placeholder** - string
+* **data-extlst-placeholder** - string, Default = 'more'
 
   Text that will be written on the button at the end of the list.
   
-* **data-extlst-size** - number
+* **data-extlst-size** - number, Default = 5
 
   Size of the chuncks.
 
+* **data-extlst-grabspace** - boolean, Default = false
+
+  Initially show as much items as possible
+  
 Upcoming Features
 -----------------
 Add an ajxa url so that chunks can be loaded dynamically. At the moment the whole list is loaded and parts of it are hidden.
