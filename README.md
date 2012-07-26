@@ -38,7 +38,8 @@ Data-attribute reference
 
 * **data-extlst-grabspace** - boolean, Default = false
 
-  Initially show as much items as possible
+  Initially show as much items as possible. The space each item needs is calculated from the
+  first non list-divider item. So this only works properly if all items have the same hight.
   
 Upcoming Features
 -----------------
