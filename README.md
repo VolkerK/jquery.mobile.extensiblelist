@@ -28,11 +28,11 @@ Take a look at the examples or try out this [jsfiddle](http://jsfiddle.net/TJ3NH
 
 Data-attribute reference
 ------------------------
-* **data-extlst-placeholder** - string
+* **data-extlst-placeholder** - string, Default = 'more'
 
   Text that will be written on the button at the end of the list.
   
-* **data-extlst-size** - number
+* **data-extlst-size** - number, Default = 5
 
   Size of the chuncks.
 
