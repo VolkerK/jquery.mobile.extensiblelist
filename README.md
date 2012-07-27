@@ -41,6 +41,12 @@ Data-attribute reference
   Initially show as much items as possible. But never less than data-extlst-size.
   The space each item needs is calculated from the first non list-divider item.
   So this only works properly if all items have the same height.
+  Use only when there is **one** extensiblelist on the page.
+
+* **data-extlst-autoscroll** - boolean, Default = false
+
+  Scrolls to the bottom of the list, so that the more button will be visible.
+  Use only when there is **one** extensiblelist on the page.
 
 Upcoming Features
 -----------------
