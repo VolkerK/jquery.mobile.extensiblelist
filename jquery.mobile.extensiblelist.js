@@ -10,10 +10,11 @@
 (function($) {
 	$.widget('mobile.extensiblelist', $.mobile.widget, {
 		options: {
-			initSelector	: ':jqmData(role=extensiblelist)',
+			initSelector: ':jqmData(role=extensiblelist)',
 			extlstPlaceholder: 'more',
 			extlstSize: 5,
-			extlstGrabspace: false
+			extlstGrabspace: false,
+			extlstAutoscroll: false
 		},
 		_create: function() {
 			if (isNaN(this.options.extlstSize)) {
@@ -76,8 +77,10 @@
 			} else {
 				// replace the text in the count bubble
 				countBubble.html(hiddenListitems.length - size);
-				var scrollObject = $.browser.mozilla ? 'html' : 'body'; 
-				$(scrollObject).animate({scrollTop: morebtn.position().top +'px'}, 800);
+				if (this.options.extlstAutoscroll) {
+					var scrollObject = $.browser.mozilla ? 'html' : 'body'; 
+					$(scrollObject).animate({scrollTop: morebtn.position().top +'px'}, 800);
+				}
 			}
 		},
 		// returns the number of listitems that still fit onto page.
