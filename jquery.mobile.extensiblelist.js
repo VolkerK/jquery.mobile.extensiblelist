@@ -90,13 +90,15 @@
 		_calculateAvailableSpace: function() {
 			var list = this.element
 			  , page = list.parents(':jqmData(role=page)')
-			  , headerHeight = page.find(':jqmData(role=header)').height() || 0
-			  , footerHeight = page.find(':jqmData(role=footer)').height() || 0
+			  , listTopPosition = Math.floor(list.position().top)
+			  // With data-position=fixed the footer is not visible yet and therefore has no height.
+			  // We assume a standard height of 50px if a footer exists on page
+			  , footerHeight = page.find(':jqmData(role=footer)').length > 0 ? 50 : 0
 			  , windowHeight = $(window).height()
 			  , listHeight = list.height()
 			  , approxListitemHeight = list.find('li').not(':jqmData(role=list-divider)').first().height() || 9999
-			  , morebtnHeight = (list.find('.ui-extensiblelist-morebtn').height() || 0)
-			  , availableSpace = windowHeight - headerHeight - footerHeight - listHeight - morebtnHeight;
+			  , spacer = 80
+			  , availableSpace = windowHeight - listTopPosition - footerHeight - listHeight - spacer;
 			return Math.floor(availableSpace / approxListitemHeight);
 		}
 	});
