@@ -39,7 +39,7 @@
 						'<span class="ui-li-count">', hiddenEntriesCount, '</span>',
 					'</a>'].join(''));
 				btninner.bind("click", $.proxy(function(event) {
-					this._displayMoreItems(this.element, this.options.extlstSize);
+					this._displayMoreItems(this.element, this.options.extlstSize, this.options.extlstAutoscroll);
 				}, this));
 				var morebtn = $('<li data-icon="false">')
 					.addClass('ui-extensiblelist-morebtn')
@@ -56,12 +56,12 @@
 				page.bind('pageshow', $.proxy(function() {
 					var availableSpace = this._calculateAvailableSpace();
 					if( availableSpace > 0 ) {
-						 this._displayMoreItems(list, availableSpace);
+						 this._displayMoreItems(list, availableSpace, this.options.extlstAutoscroll);
 					 }
 				}, this));
 			}
 		},
-		_displayMoreItems: function(list, size) {
+		_displayMoreItems: function(list, size, autoscroll) {
 			var morebtn = list.children(".ui-extensiblelist-morebtn")
 			  , hiddenListitems = list.children('li:hidden')
 			  , countBubble = morebtn.find('span.ui-li-count');
@@ -77,7 +77,7 @@
 			} else {
 				// replace the text in the count bubble
 				countBubble.html(hiddenListitems.length - size);
-				if (this.options.extlstAutoscroll) {
+				if (autoscroll) {
 					var scrollObject = $.browser.mozilla ? 'html' : 'body'; 
 					$(scrollObject).animate({scrollTop: morebtn.position().top +'px'}, 800);
 				}
