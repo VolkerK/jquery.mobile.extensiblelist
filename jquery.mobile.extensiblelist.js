@@ -1,7 +1,7 @@
 /*
  * jquery.mobile.extensiblelist v1
  *
- * Copyright (c) 2012, Volker Krebs
+ * Copyright (c) 2012, Volker Krebs and Stefan Gebhardt
  * Dual licensed under the MIT and GPL Version 2 licenses.
  * 
  * Date: 2012-07-20
