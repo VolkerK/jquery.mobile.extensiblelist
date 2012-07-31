@@ -22,6 +22,11 @@
   <div id="qunit-testrunner-toolbar"></div>
   <h2 id="qunit-userAgent"></h2>
   <ol id="qunit-tests"></ol>
-  <div id="qunit-fixture">test markup, will be hidden</div>
+  <div id="qunit-fixture">
+    <!-- The markup inside qunit-fixture is outside the visible area -->
+    <div data-role="page">
+      <div data-role="content"></div>
+    </div>
+  </div>
 </body>
 </html>
