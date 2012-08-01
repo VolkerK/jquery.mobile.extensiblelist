@@ -3,7 +3,7 @@ Extensible listview for jQuery Mobile
 What is it
 ----------
 A lightweight jQuery Mobile Plug-in that applies the listview Plug-in and splits up the list into handy chunks.
-It automatically adds a "more ..." button to load more chunks.
+It automatically adds a "more" button to show more chunks.
 
 How to use
 ----------
