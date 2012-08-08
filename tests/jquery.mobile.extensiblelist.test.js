@@ -6,13 +6,14 @@ test('test proper setup', 3, function() {
 	strictEqual(typeof jQuery.mobile.extensiblelist, 'function', 'jquery mobile extensiblelist initialized');
 });
 
-test('test default values', 6, function() {
+test('test default values', 7, function() {
 	addExtensiblelistToMarkup(15);
 	equal(jQuery(':jqmData(role=extensiblelist) > li').length, 16, 'Total of 16 li expected. 15 items, one more button');
 	equal(jQuery('.ui-extensiblelist-morebtn').length, 1, 'Expecting 1 more button');
 	equal(jQuery('a.extensiblelist-morebtn').text().substring(0, 4), 'more' , 'Standard placeholder text is more');
 	equal(jQuery('span.ui-li-count').text(), 10, '10 items left');
 	jQuery('a.extensiblelist-morebtn').trigger('click');
+	equal(jQuery('.ui-extensiblelist-morebtn').length, 1, 'Expecting 1 more button');
 	equal(jQuery('span.ui-li-count').text(), 5, '5 items left');
 	jQuery('a.extensiblelist-morebtn').trigger('click');
 	equal(jQuery('.ui-extensiblelist-morebtn').length, 0, 'No more button left');
@@ -37,10 +38,33 @@ test('test less items', 2, function() {
 	equal(jQuery('.ui-extensiblelist-morebtn').length, 0, 'Expecting no more button');
 });
 
-function addExtensiblelistToMarkup(count, extlstSize, extlstPlaceholder) {
-	var items;
+test('test count with list-dividers', 3, function() {
+	//create a list with 15 li
+	addExtensiblelistToMarkup(15,undefined,undefined,4);
+	equal(jQuery('span.ui-li-count').text(), 8, '8 countable items left');
+	jQuery('a.extensiblelist-morebtn').trigger('click');
+	equal(jQuery('span.ui-li-count').text(), 4, '4 countable  items left');
+	jQuery('a.extensiblelist-morebtn').trigger('click');
+	equal(jQuery('.ui-extensiblelist-morebtn').length, 0, 'Expecting no more button');
+});
+
+/**
+ * count: number of li-Element that will be created
+ * extlstSize: the data-extlst-size attribute for extensiblelist plug-in
+ * extlstPlaceholder: the data-extlst-placeholder attribute for extensiblelist plug-in
+ * listdividerModulo: every nth li will become a list-divider
+ */
+function addExtensiblelistToMarkup(count, extlstSize, extlstPlaceholder, listdividerModulo) {
+	var items = '';
 	for (i=0; i<count; i++) {
-		items += '<li>item' + i + '</li>'
+		var divider = '';
+		if (typeof listdividerModulo != "undefined") {
+			//every 4th li becomes a list-divider
+			if ((i % listdividerModulo) == 0) {
+				divider = ' data-role="list-divider"';
+			}
+		}
+		items += '<li' + divider + '>item' + i + '</li>'
 	}
 	var options = '';
 	if (typeof extlstSize != "undefined") options += ' data-extlst-size="' + extlstSize + '"';
