@@ -22,8 +22,7 @@
 			}
 			var self = this
 			  , listitems = this.element.children('li')
-			  , appendMoreButton = false
-			  , hiddenEntriesCount = listitems.length - this.options.extlstSize;
+			  , appendMoreButton = false;
 			listitems.each(function(index, li) {
 				// hide listitems when extlstSize is reached
 				if(index >= self.options.extlstSize) {
@@ -36,7 +35,7 @@
 				var btninner = $([
 					'<a href="#" class="extensiblelist-morebtn">',
 						this.options.extlstPlaceholder,
-						'<span class="ui-li-count">', hiddenEntriesCount, '</span>',
+						'<span class="ui-li-count">', this._calculateCountBubble(this.element), '</span>',
 					'</a>'].join(''));
 				btninner.bind("click", $.proxy(function(event) {
 					this._displayMoreItems(this.element, this.options.extlstSize, this.options.extlstAutoscroll);
@@ -76,7 +75,7 @@
 				morebtn.remove();
 			} else {
 				// replace the text in the count bubble
-				countBubble.html(hiddenListitems.length - size);
+				countBubble.html(this._calculateCountBubble(list));
 				if (autoscroll) {
 					var scrollObject = $.browser.mozilla ? 'html' : 'body'; 
 					$(scrollObject).animate({scrollTop: morebtn.position().top +'px'}, 800);
@@ -98,6 +97,26 @@
 			  , spacer = 80
 			  , availableSpace = windowHeight - listTopPosition - footerHeight - listHeight - spacer;
 			return Math.floor(availableSpace / approxListitemHeight);
+		},
+		_calculateCountBubble: function(list) {
+			var countableitems = list.children('li');
+			//use a filter function to locate countable items
+			countableitems = countableitems.filter(function(index) {
+				var item = jQuery(this);
+				if (item.hasClass('ui-extensiblelist-morebtn')) {
+					//if it is the more button we won't count it
+					return false;
+				} else if (item.css('display') != 'none') {
+					//if the element is not hidden we won't count it.
+					//the jQuery hide function sets display: none
+					return false;
+				} else if (item.attr('data-role') == 'list-divider') {
+					//if it is a list-divider we won't count it
+					return false;
+				}
+				return true;
+			});
+			return countableitems.length;
 		}
 	});
 
