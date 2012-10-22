@@ -4,8 +4,6 @@
  * Copyright (c) 2012, Volker Krebs and Stefan Gebhardt
  * Dual licensed under the MIT and GPL Version 2 licenses.
  * 
- * Date: 2012-07-20
- * Revision: 1
  */
 (function($) {
 	$.widget('mobile.extensiblelist', $.mobile.widget, {
@@ -14,7 +12,8 @@
 			extlstPlaceholder: 'more',
 			extlstSize: 5,
 			extlstGrabspace: false,
-			extlstAutoscroll: false
+			extlstAutoscroll: false,
+			extlstShowcount: true
 		},
 		_create: function() {
 			if (isNaN(this.options.extlstSize)) {
@@ -35,7 +34,7 @@
 				var btninner = $([
 					'<a href="#" class="extensiblelist-morebtn">',
 						this.options.extlstPlaceholder,
-						'<span class="ui-li-count">', this._calculateCountBubble(this.element), '</span>',
+						this._appendCountBubble(this.options.extlstShowcount),
 					'</a>'].join(''));
 				btninner.bind("click", $.proxy(function(event) {
 					this._displayMoreItems(this.element, this.options.extlstSize, this.options.extlstAutoscroll);
@@ -119,6 +118,12 @@
 				return true;
 			});
 			return countableitems.length;
+		},
+		_appendCountBubble: function(showcount) {
+			if (showcount) {
+				return '<span class="ui-li-count">' + this._calculateCountBubble(this.element) + '</span>';
+			}
+			return '';
 		}
 	});
 
