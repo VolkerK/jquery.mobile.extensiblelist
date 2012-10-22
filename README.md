@@ -48,6 +48,10 @@ Data-attribute reference
   Scrolls to the bottom of the list, so that the more button will be visible.
   Use only when there is **one** extensiblelist on the page.
 
+* **data-extlst-showcount** - boolean, Default = true
+
+  Display the count bubble.
+
 Upcoming Features
 -----------------
 Add an ajxa url so that chunks can be loaded dynamically. At the moment the whole list is loaded and parts of it are hidden.

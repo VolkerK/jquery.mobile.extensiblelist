@@ -38,23 +38,34 @@ test('test less items', 2, function() {
 	equal(jQuery('.ui-extensiblelist-morebtn').length, 0, 'Expecting no more button');
 });
 
-test('test count with list-dividers', 3, function() {
+test('test count with list-dividers', 5, function() {
 	//create a list with 15 li
 	addExtensiblelistToMarkup(15,undefined,undefined,4);
 	equal(jQuery('span.ui-li-count').text(), 8, '8 countable items left');
+	equal(jQuery('.ui-li-count').length, 1, 'Expecting a count bubble');
 	jQuery('a.extensiblelist-morebtn').trigger('click');
 	equal(jQuery('span.ui-li-count').text(), 4, '4 countable  items left');
+	equal(jQuery('.ui-li-count').length, 1, 'Expecting a count bubble');
 	jQuery('a.extensiblelist-morebtn').trigger('click');
 	equal(jQuery('.ui-extensiblelist-morebtn').length, 0, 'Expecting no more button');
 });
+
+test('test count bubble', 3, function() {
+	addExtensiblelistToMarkup(2,1,undefined,undefined,false);
+	equal(jQuery(':jqmData(role=extensiblelist) > li').length, 3, 'Total of 3 li expected. 2 items, one more button');
+	equal(jQuery('.ui-extensiblelist-morebtn').length, 1, 'Expecting a more button');
+	equal(jQuery('.ui-li-count').length, 0, 'Count bubble is disabled');
+});
+
 
 /**
  * count: number of li-Element that will be created
  * extlstSize: the data-extlst-size attribute for extensiblelist plug-in
  * extlstPlaceholder: the data-extlst-placeholder attribute for extensiblelist plug-in
  * listdividerModulo: every nth li will become a list-divider
+ * extlstShowcount: show the count bubble
  */
-function addExtensiblelistToMarkup(count, extlstSize, extlstPlaceholder, listdividerModulo) {
+function addExtensiblelistToMarkup(count, extlstSize, extlstPlaceholder, listdividerModulo, extlstShowcount) {
 	var items = '';
 	for (i=0; i<count; i++) {
 		var divider = '';
@@ -69,6 +80,7 @@ function addExtensiblelistToMarkup(count, extlstSize, extlstPlaceholder, listdiv
 	var options = '';
 	if (typeof extlstSize != "undefined") options += ' data-extlst-size="' + extlstSize + '"';
 	if (typeof extlstPlaceholder != "undefined") options += ' data-extlst-placeholder="' + extlstPlaceholder + '"';
+	if (typeof extlstShowcount != "undefined") options += ' data-extlst-showcount="' + extlstShowcount + '"';
 	var list = jQuery( '<ul data-role="extensiblelist" ' + options + '>' + items + '</ul>' ).appendTo( ':jqmData(role=content)' );
 	// apply plug-in
 	list.extensiblelist();
