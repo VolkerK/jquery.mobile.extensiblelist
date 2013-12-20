@@ -6,7 +6,7 @@
  * 
  */
 (function($) {
-	$.widget('mobile.extensiblelist', $.mobile.widget, {
+	$.widget('mobile.extensiblelist', {
 		options: {
 			initSelector: ':jqmData(role=extensiblelist)',
 			extlstPlaceholder: 'more',
